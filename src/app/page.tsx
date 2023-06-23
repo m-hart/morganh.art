@@ -1,10 +1,31 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import { HfInference } from '@huggingface/inference'
+ 
+const Hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
-export default function Home() {
+export const runtime = 'edge';
+
+// Generate dog blob
+// Woof
+export async function getDog() {
+  console.log('load');
+  const dogbuf = await (await Hf.textToImage({
+    model: 'stabilityai/stable-diffusion-2',
+    inputs: 'A jack russell terrier in a favela in expressionist style',
+  })).arrayBuffer();
+
+  return Buffer.from(dogbuf).toString('base64');
+}
+export default async function Page() {
+  const dogPath = await getDog();
+  console.log(dogPath);
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
+      <img src={`data:img/jpeg;base64,${dogPath}`} alt="Generated Dog Image" width={512} height={512} />
+
+      {/* <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.tsx</code>
@@ -89,7 +110,7 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
   )
 }
