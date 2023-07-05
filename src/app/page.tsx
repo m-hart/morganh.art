@@ -72,9 +72,8 @@ async function getDog() {
     fetch: (input, init) => fetch(input, {
       ...init,
       next: {
-        // revalidate: 600,
+        revalidate: 600,
       },
-      cache: 'no-cache',
     })
   })).arrayBuffer();
 
