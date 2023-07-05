@@ -1,126 +1,116 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import sample from 'lodash/sample';
+import { differenceInSeconds } from 'date-fns';
 import { HfInference } from '@huggingface/inference'
+import { Suspense } from 'react';
  
 const Hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
-
-export const runtime = 'edge';
 // export const revalidate = 10;
 // export const fetchCache = 'force-no-store';
 // Generate dog blob
 // Woof
+
+const artLocations = [
+  'in a favela',
+  'in a field',
+  'in a stadium',
+  'in a park',
+  'on a beach',
+  'in outer space',
+  'underwater',
+  'in a japanese shrine',
+  'in a boxing ring',
+  'in bed',
+  'driving a car',
+  'in a school',
+  'in a bazaar',
+]
+
+// Random style
+const artStyles = [
+  'expressionist',
+  'Watercolor',
+  'Digital art Behance',
+  'Academicism painting',
+  'Pop-art',
+  'cubist',
+  'constructivist',
+  'soviet realism',
+  'Surrealism painting',
+  'Art deco illustration',
+  'Avant-garde painting',
+  'Classicism painting',
+  'Op Art',
+  'Black and white photo',
+  'Polaroid',
+  'Movie still',
+  'Tattoo art',
+  'Pixel art',
+  'anime',
+  'photo realistic'
+];
+
+interface DogCache {
+  dogURI?: string;
+  date: Date;
+}
+
+const CACHE: DogCache = {
+  dogURI: undefined,
+  date: new Date(),
+}
+
 async function getDog() {
-  console.log('load');
+  CACHE.date = new Date();
+
   const dogbuf = await (await Hf.textToImage({
     model: 'stabilityai/stable-diffusion-2',
-    inputs: 'A jack russell terrier in a favela in expressionist style',
+    inputs: `A jack russell terrier in a ${sample(artLocations)} in a ${sample(artStyles)} style`,
   }, {
     use_cache: false,
     fetch: (input, init) => fetch(input, {
       ...init,
       next: {
-        revalidate: 60,
+        // revalidate: 600,
       },
-      // cache: 'no-store',
+      cache: 'no-cache',
     })
   })).arrayBuffer();
 
-  return Buffer.from(dogbuf).toString('base64');
+  CACHE.dogURI = Buffer.from(dogbuf).toString('base64');
+}
+
+async function getURI() {
+  if (CACHE.dogURI === undefined) {
+    await getDog();
+
+    return CACHE.dogURI;
+  }
+
+  if (differenceInSeconds(new Date(), CACHE.date) > 60) {
+    getDog();
+  }
+
+  return CACHE.dogURI;
 }
 
 export default async function Page() {
-  const dogPath = await getDog();
+  const dogPath = await getURI();
 
   return (
     <main className={styles.main}>
-      <img src={`data:img/jpeg;base64,${dogPath}`} alt="Generated Dog Image" width={512} height={512} />
-
-      {/* <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+      <img 
+        src={`data:img/jpeg;base64,${dogPath}`} 
+        alt="Generated Dog Image" 
+        width={512} 
+        height={512} 
+      />
+      <div className={styles.content}>
+        <p>woof - it's pip!</p>
+        <p>i make websites; contact info soon.</p>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div> */}
     </main>
   )
 }
+
