@@ -1,5 +1,9 @@
 ## Version History
 
+### 0.3.0
+- Add content
+- Add error handling
+
 ### 0.2.0
 - Fix caching
 
