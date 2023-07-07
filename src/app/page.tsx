@@ -78,7 +78,8 @@ async function getDog(): Promise<string> {
       inputs: `A jack russell terrier in a ${sample(artLocations)} in a ${sample(artStyles)} style`,
     }, {
       use_cache: false,
-      fetch: (input, opts) => fetch(input, {
+      // cache bust yieeeeeew
+      fetch: (input, opts) => fetch(`${input}?Math.floor(Date.now() / 1000 / (60 * 6))`, {
         ...(opts || {}),
         // cache: 'no-cache',
         next: {
