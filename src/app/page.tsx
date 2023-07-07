@@ -17,12 +17,12 @@ async function getDog(): Promise<string> {
 }
 
 export default async function Page() {
-  // const dogURI = await getDog();
+  const dogURI = await getDog();
 
   return (
     <main className={styles.main}>
       <img 
-        // src={dogURI} 
+        src={dogURI} 
         alt="Generated image of pip the jack russell" 
         width={512} 
         height={512} 
