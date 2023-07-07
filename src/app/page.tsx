@@ -6,7 +6,6 @@ import { differenceInSeconds } from 'date-fns';
 const Hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
 
 export const revalidate = 120;
-export const fetchCache = 'force-cache';
 export const dynamic = 'error';
 
 // See getDog method for this nastyness
