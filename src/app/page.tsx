@@ -80,7 +80,10 @@ async function getDog(): Promise<string> {
       use_cache: false,
       fetch: (input, opts) => fetch(input, {
         ...(opts || {}),
-        cache: 'no-cache',
+        // cache: 'no-cache',
+        next: {
+          revalidate: 60,
+        }
       })
     });
   }
