@@ -78,6 +78,10 @@ async function getDog(): Promise<string> {
       inputs: `A jack russell terrier in a ${sample(artLocations)} in a ${sample(artStyles)} style`,
     }, {
       use_cache: false,
+      fetch: (input, opts) => fetch(input, {
+        ...(opts || {}),
+        cache: 'no-cache',
+      })
     });
   }
 
