@@ -21,6 +21,7 @@ export default function NavLink({
 
   const link = (
     <Link
+      prefetch
       href={match ? '#' : href}
       className={match ? styles.selectedLink : styles.link}
     >

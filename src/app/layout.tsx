@@ -1,13 +1,13 @@
 import NavBar from '@/components/nav/NavBar'
-import './globals.scss'
 import { Inter } from 'next/font/google'
 import NavLink from '@/components/nav/NavLink'
+import './globals.scss'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'morganh.art',
-  description: 'dog generator',
+  description: 'portfolio and dog generator',
 }
 
 export default function RootLayout({
@@ -32,7 +32,10 @@ export default function RootLayout({
             title='portfolio'
           />
         </NavBar>
-        {children}
+        {/* Some times I'm just lazy */}
+        <div style={{ margin: 'var(--small-gutter)' }}>
+          {children}
+        </div>
       </body>
     </html>
   )
