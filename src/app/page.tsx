@@ -79,12 +79,11 @@ async function getDog(): Promise<string> {
     }, {
       use_cache: false,
       // cache bust yieeeeeew
-      fetch: (input, opts) => fetch(`${input}?Math.floor(Date.now() / 1000 / (60 * 6))`, {
+      fetch: (input, opts) => fetch(`${input}?${Math.floor(Date.now() / 60000)}`, {
         ...(opts || {}),
-        // cache: 'no-cache',
-        next: {
-          revalidate: 60,
-        }
+        // next: {
+        //   revalidate: 60,
+        // }
       })
     });
   }
