@@ -1,5 +1,7 @@
 import styles from './page.module.scss'
 
+export const dynamic = 'force-dynamic';
+
 async function getDog(): Promise<string> {
   const res = await fetch(
     `${process.env.CANONICAL_URL}/api/dog`,
