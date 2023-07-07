@@ -1,9 +1,9 @@
-import styles from './error.module.scss';
+import ErrorContainer from '@/components/containers/ErrorContainer';
 
 export default function Error404() {
   return (
-    <div className={styles.container}>
+    <ErrorContainer>
       <p>404 not found</p>
-    </div>
+    </ErrorContainer>
   );
 }

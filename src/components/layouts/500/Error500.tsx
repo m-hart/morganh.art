@@ -1,15 +1,16 @@
 import NavLink from '@/components/nav/NavLink';
-import styles from './error.module.scss';
+
+import ErrorContainer from '@/components/containers/ErrorContainer';
 
 export default function Error500() {
   return (
-    <div className={styles.container}>
+    <ErrorContainer>
       <p>500 something went wrong</p>
       <NavLink
         title='home'
         href='/'
         list={false}
       />
-    </div>
+    </ErrorContainer>
   );
 }
