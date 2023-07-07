@@ -1,0 +1,29 @@
+.bar {
+  position: absolute;
+  width: 100vw;
+  top: var(--small-gutter);
+  left: var(--small-gutter);
+}
+
+.barChildren {
+  display: flex;
+  flex-direction: row;
+  gap: var(--small-gutter);
+}
+
+
+.link {
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.selectedLink {
+  composes: link;
+  text-decoration: underline;
+
+  &:hover {
+    cursor: default;
+  }
+}

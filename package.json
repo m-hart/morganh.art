@@ -15,7 +15,8 @@
     "next": "^13.4.7",
     "next-translate": "^2.4.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sass": "^1.63.6"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.195",
