@@ -25,7 +25,7 @@ export default function PortfolioItem({
   return (
     <li key={title} className={styles.item}>
       <NavLink
-        title={`${title} (${subtitle})`}
+        title={`${title} ${subtitle}`}
         href={href}
         list={false}
       />

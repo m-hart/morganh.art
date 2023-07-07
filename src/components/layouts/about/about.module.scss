@@ -1,0 +1,9 @@
+.container {
+  & > * {
+    margin: var(--small-gutter) 0;
+    & > ul {
+      list-style: '- ';
+      margin-left: var(--small-gutter);
+    }
+  }
+}

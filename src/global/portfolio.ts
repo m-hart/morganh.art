@@ -15,8 +15,8 @@ export interface PortfolioItem {
 export const ITEMS: PortfolioItem[] = [
   {
     title: 'The Orb',
-    subtitle: '2018-2022',
-    description: 'interactive multimedia eductional resource about tasmanian aboriginal culture',
+    subtitle: '2018 - 2022',
+    description: 'interactive multimedia eductional resource about tasmanian aboriginal cultural practice',
     href: 'https://www.theorb.tas.gov.au/',
     position: 'junior frontend developer',
     technologies: ['typescript', 'react', 'redux', 'sass', 'postcss', 'webpack', 'node', 'mapboxgl'],
@@ -36,7 +36,7 @@ export const ITEMS: PortfolioItem[] = [
     technologies: ['javascript', 'react', 'redux', 'sharetribe flex', 'postcss', 'expressjs', 'AWS DynamoDB, S3, ECS and EC2'],
   },
   {
-    title: 'Dark MOFO 2023',
+    title: 'Dark MOFO',
     subtitle: '2023',
     description: 'program website for tasmania\'s biggest annual festival',
     href: 'https://darkmofo.net.au/',

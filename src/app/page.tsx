@@ -28,7 +28,7 @@ export default async function Page() {
         height={512} 
       />
       <div className={styles.content}>
-        <p>woof - it's pip!</p>
+        <p>woof - it's  my jack russell pip! check back every now and then to see what pip is up to.</p>
         <p>i make websites; contact info soon.</p>
       </div>
     </main>
