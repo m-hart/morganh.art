@@ -1,112 +1,34 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-import sample from 'lodash/sample';
-import { differenceInSeconds } from 'date-fns';
-import { HfInference } from '@huggingface/inference'
-import { Suspense } from 'react';
- 
-const Hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
-// export const revalidate = 10;
-// export const fetchCache = 'force-no-store';
-// Generate dog blob
-// Woof
+import styles from './page.module.scss'
 
-const artLocations = [
-  'in a favela',
-  'in a field',
-  'in a stadium',
-  'in a park',
-  'on a beach',
-  'in outer space',
-  'underwater',
-  'in a japanese shrine',
-  'in a boxing ring',
-  'in bed',
-  'driving a car',
-  'in a school',
-  'in a bazaar',
-]
+async function getDog(): Promise<string> {
+  const res = await fetch(
+    `${process.env.CANONICAL_URL}/api/dog`,
+    {
+      method: 'GET',
+      mode: 'same-origin',
+      cache: 'no-cache',
+      // next: {
+      //   revalidate: 60,
+      // }
+    }
+  );
 
-// Random style
-const artStyles = [
-  'expressionist',
-  'Watercolor',
-  'Digital art Behance',
-  'Academicism painting',
-  'Pop-art',
-  'cubist',
-  'constructivist',
-  'soviet realism',
-  'Surrealism painting',
-  'Art deco illustration',
-  'Avant-garde painting',
-  'Classicism painting',
-  'Op Art',
-  'Black and white photo',
-  'Polaroid',
-  'Movie still',
-  'Tattoo art',
-  'Pixel art',
-  'anime',
-  'photo realistic'
-];
-
-interface DogCache {
-  dogURI?: string;
-  date: Date;
-}
-
-const CACHE: DogCache = {
-  dogURI: undefined,
-  date: new Date(),
-}
-
-async function getDog() {
-  CACHE.date = new Date();
-
-  const dogbuf = await (await Hf.textToImage({
-    model: 'stabilityai/stable-diffusion-2',
-    inputs: `A jack russell terrier in a ${sample(artLocations)} in a ${sample(artStyles)} style`,
-  }, {
-    use_cache: false,
-    fetch: (input, init) => fetch(input, {
-      ...init,
-      next: {
-        revalidate: 600,
-      },
-    })
-  })).arrayBuffer();
-
-  CACHE.dogURI = Buffer.from(dogbuf).toString('base64');
-}
-
-async function getURI() {
-  if (CACHE.dogURI === undefined) {
-    await getDog();
-
-    return CACHE.dogURI;
-  }
-
-  if (differenceInSeconds(new Date(), CACHE.date) > 60) {
-    getDog();
-  }
-
-  return CACHE.dogURI;
+  return (await res.json()).uri;
 }
 
 export default async function Page() {
-  const dogPath = await getURI();
+  const dogURI = await getDog();
 
   return (
     <main className={styles.main}>
       <img 
-        src={`data:img/jpeg;base64,${dogPath}`} 
-        alt="Generated Dog Image" 
+        src={dogURI} 
+        alt="Generated image of pip the jack russell" 
         width={512} 
         height={512} 
       />
       <div className={styles.content}>
-        <p>woof - it's pip!</p>
+        <p>woof - it's  my jack russell pip! check back every now and then to see what pip is up to.</p>
         <p>i make websites; contact info soon.</p>
       </div>
     </main>

@@ -1,0 +1,10 @@
+.item {
+  margin: var(--small-gutter) 0;
+  & > ul {
+    // list-style: '-';
+    & > * > ul {
+      margin-left: var(--small-gutter);
+      list-style: '- ';
+    }
+  }
+}
