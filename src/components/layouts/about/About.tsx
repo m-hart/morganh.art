@@ -1,18 +1,17 @@
+import Image from 'next/image';
 import styles from './about.module.scss';
+import morgan from './morgan.jpg';
 
 export default function About() {
   return (
     <div className={styles.container}>
+      <Image 
+        src={morgan}
+        alt="Generated image of pip the jack russell" 
+        width={256} 
+        height={256} 
+      />
       <p>i'm a 24 year old developer who likes making cool stuff</p>
-      <div>
-        <p>contact</p>
-        <ul>
-          <li>coming soon</li>
-          {/* <li>linkedin: coming soon</li>
-          <li>email: coming soon</li>
-          <li>github: private</li> */}
-        </ul>
-      </div>
     </div>
   )
 }
