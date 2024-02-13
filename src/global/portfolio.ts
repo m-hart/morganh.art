@@ -32,23 +32,29 @@ export const ITEMS: PortfolioItem[] = [
     subtitle: '2022 - 2023',
     description: 'online marketplace with a focus on circular economy',
     href: 'https://www.rosellastreet.com',
-    position: 'developer',
-    technologies: ['javascript', 'react', 'redux', 'sharetribe flex', 'postcss', 'expressjs', 'AWS DynamoDB, S3, ECS and EC2'],
+    position: 'full stack developer',
+    technologies: ['javascript', 'react', 'redux', 'sharetribe flex', 'node', 'postcss', 'expressjs', 'aws dynamodb, s3, ecs and ec2'],
   },
   {
     title: 'Dark MOFO',
     subtitle: '2023',
     description: 'program website for tasmania\'s biggest annual festival',
     href: 'https://darkmofo.net.au/',
-    position: 'contract developer',
+    position: 'contract frontend developer',
     technologies: ['typescript', 'nextjs', 'sass', 'graphql', 'sanity', 'mapboxgl'],
+    meta: [
+      {
+        text: 'website currently on display for summer MONA FOMA with updated colours (otherwise identical)',
+        href: 'https://monafoma.net.au/'
+      }
+    ]
   },
   {
     title: 'traceably.io',
     subtitle: '2023 - present',
     description: 'collaboration platform revolutionising digital transformation',
     href: 'https://traceably.io/',
-    position: 'full stack developer',
-    technologies: ['typescript', 'nextjs', 'sass', 'supabase', 'postgres'],
+    position: 'contract full stack developer',
+    technologies: ['typescript', 'nextjs', 'sass', 'supabase', 'postgres', 'drizzle-orm'],
   },
 ]

@@ -6,4 +6,11 @@
       margin-left: var(--small-gutter);
     }
   }
+
+  & > img {
+    width: 256px;
+    height: 256px;
+    border-radius: 256px;
+    object-fit: cover;
+  }
 }

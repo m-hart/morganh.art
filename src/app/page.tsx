@@ -109,7 +109,7 @@ export default async function Page() {
       />
       <div className={styles.content}>
         <p>woof - it's  my jack russell pip! check back every now and then to see what pip is up to.</p>
-        <p>i make websites; contact info soon.</p>
+        <p>i make websites.</p>
       </div>
     </main>
   )
